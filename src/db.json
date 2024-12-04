@@ -4,25 +4,25 @@
 			"id": "1123",
 			"login": "John123",
 			"password": "123qwerty",
-			"role_id": 1,
+			"role_id": 0,
 			"registered_at": "2024.09.04"
 		}
 	],
 	"roles": [
 		{
-			"id": 1,
+			"id": 0,
 			"name": "admin"
 		},
 		{
-			"id": 2,
+			"id": 1,
 			"name": "moderator"
 		},
 		{
-			"id": 3,
+			"id": 2,
 			"name": "reader"
 		},
 		{
-			"id": 4,
+			"id": 3,
 			"name": "guest"
 		}
 	],
