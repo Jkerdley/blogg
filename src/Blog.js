@@ -1,6 +1,16 @@
 import styled from 'styled-components';
 import { Route, Routes } from 'react-router-dom';
-import { Header, Footer, Content } from './components';
+import { StyledHeader, Footer, Content } from './components';
+
+const AppColumn = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	width: 1000px;
+	min-height: 100%;
+	margin: 0 auto;
+	background-color: #fff;
+`;
 
 const H1 = styled.h1`
 	text-align: center;
@@ -11,8 +21,8 @@ const H1 = styled.h1`
 
 function Blog() {
 	return (
-		<>
-			<Header />
+		<AppColumn>
+			<StyledHeader />
 			<Content>
 				<H1>Child</H1>
 				<Routes>
@@ -27,7 +37,7 @@ function Blog() {
 				</Routes>
 			</Content>
 			<Footer />
-		</>
+		</AppColumn>
 	);
 }
 export default Blog;

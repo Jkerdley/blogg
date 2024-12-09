@@ -5,6 +5,7 @@ const Div = styled.div`
 	text-align: center;
 	color: red;
 	font-weight: bold;
+	margin-top: 120px;
 `;
 
 export const Content = ({ children }) => {
