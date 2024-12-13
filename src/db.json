@@ -2,8 +2,8 @@
 	"users": [
 		{
 			"id": "1123",
-			"login": "John123",
-			"password": "123qwerty",
+			"login": "john",
+			"password": "qwerty1",
 			"role_id": 0,
 			"registered_at": "2024.09.04"
 		}

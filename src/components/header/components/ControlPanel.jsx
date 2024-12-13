@@ -1,7 +1,22 @@
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Icon } from '../../Icon';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	selectUserRole,
+	selectUserLogin,
+	selectUserSession,
+} from '../../../store/selectors';
+import { ROLES } from '../../../constants/roles';
+import { logout } from '../../../store/actions';
 
+const UserLogin = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 18px;
+	font-weight: 500;
+`;
 const RightAligned = styled.div`
 	display: flex;
 	justify-content: flex-end;
@@ -12,7 +27,7 @@ const StyledLink = styled(Link)`
 	border: none;
 	height: 32px;
 	width: auto;
-	margin-top: 5px;
+	margin-top: 4px;
 	padding-left: 10px;
 	padding-right: 5px;
 	font-size: 16px;
@@ -27,13 +42,35 @@ const StyledLink = styled(Link)`
 `;
 
 const ControlPanelContainer = ({ className }) => {
+	const roleId = useSelector(selectUserRole);
+	const login = useSelector(selectUserLogin);
+	const session = useSelector(selectUserSession);
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
+
 	return (
 		<div className={className}>
 			<RightAligned>
-				<StyledLink to="/login">
-					ВОЙТИ <Icon id="fa-forward" size="18px" margin="5px  5px  5px 5px" />
-				</StyledLink>
+				{roleId === ROLES.GUEST ? (
+					<StyledLink padding="0 10px 0 20px" to="/login">
+						ВОЙТИ{' '}
+						<Icon id="fa-sign-in" size="20px" margin="5px  5px  5px 5px" />
+					</StyledLink>
+				) : (
+					<>
+						<UserLogin>{login}</UserLogin>
+						<StyledLink
+							padding="0 10px 0 20px"
+							onClick={() => dispatch(logout(session))}
+						>
+							<Icon
+								id="fa-sign-out"
+								size="20px"
+								margin="5px  5px  5px 5px"
+							/>
+						</StyledLink>
+					</>
+				)}
 			</RightAligned>
 			<RightAligned>
 				<StyledLink onClick={() => navigate(-1)}>

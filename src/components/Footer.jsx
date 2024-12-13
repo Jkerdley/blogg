@@ -22,7 +22,7 @@ export const Footer = () => {
 	const [weather, setWheather] = useState('');
 	useEffect(() => {
 		fetch(
-			'https://api.openweathermap.org/data/2.5/weather?q=Moscow&units=metric&lang=ru&appid=cab197bed1b1557afe080b921bc559a4',
+			'https://api.openweathermap.org/data/2.5/weather?q=Abakan&units=metric&lang=ru&appid=cab197bed1b1557afe080b921bc559a4',
 		)
 			.then((response) => response.json())
 			.then(({ name, main, weather }) => {
