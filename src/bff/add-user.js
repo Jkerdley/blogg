@@ -9,4 +9,4 @@ export const addUser = (login, password) =>
 			regrole_id: 2,
 			registered_at: generateDate(),
 		}),
-	});
+	}).then((createdUser) => createdUser.json());
