@@ -5,6 +5,6 @@ const Div = styled.div`
 	margin-top: 120px;
 `;
 
-export const Content = ({ children }) => {
+export const Page = ({ children }) => {
 	return <Div>{children}</Div>;
 };

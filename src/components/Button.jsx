@@ -13,15 +13,16 @@ export const Button = styled(ButtonContainer)`
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	margin: ${({ margin = '0' }) => margin};
 	padding: ${({ padding = '0' }) => padding};
 	border: none;
 	height: 32px;
 	min-width: ${({ width = 'auto' }) => width};
 	font-size: 16px;
 	font-weight: 600;
-	background-color: #ececec;
+	background-color: ${({ bgcolor = '#ececec' }) => bgcolor};
 	border-radius: 10px;
-	box-shadow: 2px 2px 6px #cacaca;
+	box-shadow: ${({ shadow = '2px 2px 6px #cacaca' }) => shadow};
 	cursor: pointer;
 	&:hover {
 		background-color: #c5c5c5;

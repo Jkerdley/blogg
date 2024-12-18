@@ -27,7 +27,7 @@
 
 Схема states Redux store:
 
-- user = { login, userName, roleId }
+- user = { login, userName, roleId, session }
 - posts: posts = [{id, title, imgUrl, publishedAt, commentsCount, content},]
 - currentPost = { id, title, imgUrl, publishedAt, content, comments:[id, authorId, content, publishedAt] }
 - users: user = [id, login, roleId, registeredAt]

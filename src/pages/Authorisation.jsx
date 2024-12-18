@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { Link, Navigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { server } from '../bff/server.js';
+import { server } from '../bff';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { Button, H2, Input } from '../components/index.js';
@@ -80,6 +80,7 @@ const AuthorisationContainer = ({ className }) => {
 				setServerError(`Ошибка запроса: ${error}`);
 				return;
 			}
+			console.log('Проверка Response from server:', response);
 			dispatch(setUser(response));
 		});
 	};

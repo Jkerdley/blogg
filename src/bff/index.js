@@ -1,1 +1,1 @@
-export * from './bff.js';
+export { server } from '../bff/server';
