@@ -10,3 +10,4 @@ export * from '../api/get-comments';
 export * from '../api/get-session';
 export * from '../api/add-session';
 export * from '../api/delete-session';
+export * from '../api/deleteComment';
