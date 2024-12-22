@@ -80,8 +80,8 @@ const AuthorisationContainer = ({ className }) => {
 				setServerError(`Ошибка запроса: ${error}`);
 				return;
 			}
-			console.log('Проверка Response from server:', response);
 			dispatch(setUser(response));
+			sessionStorage.setItem('userData', JSON.stringify(response));
 		});
 	};
 

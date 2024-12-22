@@ -6,7 +6,7 @@ import {
 	usersReducer,
 	postReducer,
 	postsReducer,
-} from './reducers/index.js';
+} from './reducers';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const reducer = combineReducers({

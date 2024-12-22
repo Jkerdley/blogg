@@ -31,12 +31,6 @@ const UsersPageContainer = ({ className }) => {
 					setErrorMessage(usersResponse.error || rolesResponse.error);
 					return;
 				}
-				console.log(
-					'User Response  USERPAGE',
-					usersResponse.response,
-					'Roles Response  USERPAGE',
-					rolesResponse.response,
-				);
 
 				setUsers(usersResponse.response);
 				setRoles(rolesResponse.response);

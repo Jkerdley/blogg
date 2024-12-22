@@ -1,14 +1,21 @@
 import { ACTION_TYPE } from '../actions/index';
-import { ROLES } from '../../constants/roles';
 
 const initialPostState = {
-	user: null,
-	id: null,
-	roleId: ROLES.GUEST,
-	session: null,
+	id: '',
+	title: '',
+	imageUrl: '',
+	content: '',
+	publishedAt: '',
+	comments: [],
 };
 export const postReducer = (state = initialPostState, action) => {
 	switch (action.type) {
+		case ACTION_TYPE.SET_POST_DATA: {
+			return {
+				...state,
+				...action.payload,
+			};
+		}
 		default:
 			return state;
 	}

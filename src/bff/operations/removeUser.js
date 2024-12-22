@@ -2,11 +2,12 @@ import { deleteUser } from '../api';
 import { ROLES } from '../constants';
 import { sessions } from '../sessions';
 
-export const removeUser = async (userSession, userId) => {
-	const haveAccessRoles = [ROLES.ADMIN];
+export const removeUser = async (hash, userId) => {
+	const accesRoles = [ROLES.ADMIN];
 
-	if (!sessions.access(userSession, haveAccessRoles)) {
-		console.error('userSession is null or undefined');
+	const access = await sessions.access(hash, accesRoles);
+
+	if (!access) {
 		return {
 			error: 'Доступ запрещен',
 			response: null,

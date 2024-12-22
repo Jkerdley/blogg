@@ -2,23 +2,17 @@ import { getUsers } from '../api';
 import { sessions } from '../sessions';
 import { ROLES } from '../constants';
 
-export const fetchUsers = async (userSession) => {
-	const haveAccessRoles = [ROLES.ADMIN];
+export const fetchUsers = async (hash) => {
+	const accesRoles = [ROLES.ADMIN];
 
-	if (!sessions.access(userSession, haveAccessRoles)) {
-		console.error('userSession is null or undefined');
+	const access = await sessions.access(hash, accesRoles);
+
+	if (!access) {
 		return {
 			error: 'Доступ запрещен',
 			response: null,
 		};
 	}
-	if (!sessions.access(userSession, haveAccessRoles)) {
-		return {
-			error: 'Доступ запрещен',
-			response: null,
-		};
-	}
-
 	const users = await getUsers();
 	return {
 		error: null,

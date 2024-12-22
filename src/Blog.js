@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 import { Route, Routes } from 'react-router-dom';
 import { StyledHeader, Footer, Page } from './components';
-import { Authorisation, Registration, UsersPage } from './pages/index.js';
+import { Authorisation, Post, Registration, UsersPage } from './pages/index.js';
+import { useLayoutEffect } from 'react';
+import { setUser } from './store/actions';
+import { useDispatch } from 'react-redux';
 
 const AppColumn = styled.div`
 	display: flex;
@@ -14,6 +17,20 @@ const AppColumn = styled.div`
 `;
 
 function Blog() {
+	const dispatch = useDispatch();
+	useLayoutEffect(() => {
+		const currentUserDataJSON = sessionStorage.getItem('userData');
+		if (!currentUserDataJSON) {
+			return;
+		}
+		const currentUserData = JSON.parse(currentUserDataJSON);
+		dispatch(
+			setUser({
+				...currentUserData,
+				roleId: Number(currentUserData.roleId),
+			}),
+		);
+	}, [dispatch]);
 	return (
 		<AppColumn>
 			<StyledHeader />
@@ -25,8 +42,8 @@ function Blog() {
 					<Route path="/authError" element={<div>authError</div>} />
 					<Route path="/*" element={<div>404</div>} />
 					<Route path="/users" element={<UsersPage />} />
-					<Route path="/posts/:postId" element={<div>Post</div>} />
-					<Route path="/post" element={<div>New Post</div>} />
+					<Route path="/posts" element={<div>Posts</div>} />
+					<Route path="/post/:id" element={<Post />} />
 				</Routes>
 			</Page>
 			<Footer />

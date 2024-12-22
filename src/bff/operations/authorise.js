@@ -13,7 +13,6 @@ export const authorize = async (authLogin, authPassword) => {
 	if (authPassword !== password) {
 		return { error: 'Invalid password', response: null };
 	}
-	console.log('User from DB:', user);
 	const sessionData = { id, login, roleId };
 	const sessionId = sessions.create(sessionData);
 	return {

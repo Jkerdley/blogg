@@ -9,6 +9,5 @@ export const getUsers = () =>
 // 	const users = await fetch('http://localhost:3005/users').then((loadedUsers) =>
 // 		loadedUsers.json(),
 // 	);
-// 	console.log(users);
 // 	return users.find((user) => user.login === loginToFind);
 // };

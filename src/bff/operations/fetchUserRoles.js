@@ -2,11 +2,12 @@ import { getRoles } from '../api';
 import { sessions } from '../sessions';
 import { ROLES } from '../constants';
 
-export const fetchUserRoles = async (userSession) => {
-	const haveAccessRoles = [ROLES.ADMIN];
-	console.log('Текущая роль пользователя в fetchRoles:', userSession.roleId);
+export const fetchUserRoles = async (hash) => {
+	const accesRoles = [ROLES.ADMIN];
 
-	if (!sessions.access(userSession, haveAccessRoles)) {
+	const access = await sessions.access(hash, accesRoles);
+
+	if (!access) {
 		return {
 			error: 'Доступ запрещен',
 			response: null,
@@ -14,7 +15,6 @@ export const fetchUserRoles = async (userSession) => {
 	}
 
 	const roles = await getRoles();
-	console.log('Roles', roles);
 	return {
 		error: null,
 		response: roles,
@@ -32,7 +32,6 @@ export const fetchUserRoles = async (userSession) => {
 // 	}
 
 // 	const userData = sessions.list[sessionId];
-// 	console.log('User data from session:', userData);
 
 // 	if (!sessions.access(sessionId, haveAccessRoles)) {
 // 		return {
