@@ -40,13 +40,13 @@ const CommentsContainer = ({ className, comments, postId }) => {
 			</div>
 
 			<div className="comments">
-				{comments.map((comment) => (
+				{comments.map(({ id, author, content, publishedAt }) => (
 					<Comment
-						key={comment.id}
-						id={comment.id}
-						author={comment.author_id}
-						content={comment.content}
-						createdAt={comment.published_at}
+						key={id}
+						id={id}
+						author={author}
+						content={content}
+						publishedAt={publishedAt}
 					/>
 				))}
 			</div>
@@ -54,17 +54,14 @@ const CommentsContainer = ({ className, comments, postId }) => {
 	);
 };
 export const Comments = styled(CommentsContainer)`
-	align-items: center;
-	justify-content: flex-start;
 	width: 580px;
 	height: auto;
 	margin: 0 auto;
-	border: solid 1px grey;
 
 	& .new-comment-area {
 		display: flex;
 		width: 100%;
-		margin: 0 0 20px 0;
+		margin: 0 0 14px 0;
 	}
 	& textarea {
 		font-size: 18px;
