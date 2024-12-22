@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Route, Routes } from 'react-router-dom';
-import { StyledHeader, Footer, Page } from './components';
+import { StyledHeader, Footer, Page, Modal } from './components';
 import { Authorisation, Post, Registration, UsersPage } from './pages/index.js';
 import { useLayoutEffect } from 'react';
 import { setUser } from './store/actions';
@@ -34,6 +34,7 @@ function Blog() {
 	return (
 		<AppColumn>
 			<StyledHeader />
+
 			<Page>
 				<Routes>
 					<Route path="/" element={<div>Main page</div>} />
@@ -47,6 +48,7 @@ function Blog() {
 				</Routes>
 			</Page>
 			<Footer />
+			<Modal />
 		</AppColumn>
 	);
 }
