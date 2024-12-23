@@ -12,3 +12,4 @@ export * from '../api/add-session';
 export * from '../api/delete-session';
 export * from '../api/deleteComment';
 export * from '../api/update-post';
+export * from '../api/delete-post';
