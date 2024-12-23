@@ -3,8 +3,8 @@ import { useMatch, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Comments, PostContent, PostForm } from './components';
 import { useServerRequest } from '../../hooks';
-import { loadPostAsync } from '../../store/actions';
-import { useEffect } from 'react';
+import { loadPostAsync, RESET_POST_DATA } from '../../store/actions';
+import { useEffect, useLayoutEffect } from 'react';
 import { selectPost } from '../../store/selectors';
 
 const PostContainer = ({ className }) => {
@@ -13,6 +13,10 @@ const PostContainer = ({ className }) => {
 	const isEditing = useMatch('/post/:id/edit');
 	const requestServer = useServerRequest();
 	const post = useSelector(selectPost);
+
+	useLayoutEffect(() => {
+		dispatch(RESET_POST_DATA);
+	}, [dispatch]);
 
 	useEffect(() => {
 		dispatch(loadPostAsync(requestServer, params.id));

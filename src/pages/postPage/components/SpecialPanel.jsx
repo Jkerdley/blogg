@@ -1,11 +1,12 @@
-import React from 'react';
 import styled from 'styled-components';
-import { Button, Icon } from '../../../components';
+import { useDispatch } from 'react-redux';
+import { CLOSE_MODAL, openModal } from '../../../store/actions';
+import { useServerRequest } from '../../../hooks';
+import { Icon } from '../../../components';
 
 const SpecialPanelContainer = ({
 	className,
 	publishedAt,
-
 	editButton,
 	saveButton,
 	deleteButton,
