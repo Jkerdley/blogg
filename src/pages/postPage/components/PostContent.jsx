@@ -2,11 +2,30 @@ import styled from 'styled-components';
 import { SpecialPanel } from './SpecialPanel';
 import { Button, Icon } from '../../../components';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useServerRequest } from '../../../hooks';
+import { CLOSE_MODAL, openModal, removePostAsync } from '../../../store/actions';
 
 const PostContentcontainer = ({ className, post }) => {
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const requestServer = useServerRequest();
 
-	const onDelete = () => {};
+	const onPostRemove = () => {
+		dispatch(
+			openModal({
+				text: 'Удалить пост?',
+				onConfirm: () => {
+					dispatch(removePostAsync(requestServer, post.id)).then(() =>
+						navigate(`/`),
+					);
+					dispatch(CLOSE_MODAL);
+				},
+				onCancel: () => dispatch(CLOSE_MODAL),
+			}),
+		);
+	};
+
 	const onEdit = () => {
 		navigate(`/post/${post.id}/edit`);
 	};
@@ -31,7 +50,7 @@ const PostContentcontainer = ({ className, post }) => {
 						bgcolor="white"
 						shadow="none"
 						padding="1px 0 0 5px"
-						onClick={onDelete}
+						onClick={onPostRemove}
 					>
 						<Icon size="21px" id="fa-trash-o" margin="1px 6px 0 0" />
 					</Button>
