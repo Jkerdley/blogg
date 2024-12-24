@@ -1,7 +1,4 @@
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
-import { CLOSE_MODAL, openModal } from '../../../store/actions';
-import { useServerRequest } from '../../../hooks';
 import { Icon } from '../../../components';
 
 const SpecialPanelContainer = ({
@@ -15,13 +12,15 @@ const SpecialPanelContainer = ({
 		<div className={className}>
 			<div className="date-and-icon">
 				<div className="published-at">
-					<Icon id="fa-calendar-o" size="16px" margin="0 4px 0 0" />
+					{publishedAt && (
+						<Icon id="fa-calendar-o" size="16px" margin="0 4px 0 0" />
+					)}
 					{publishedAt}
 				</div>
 				<div className="buttons">
 					{editButton}
 					{saveButton}
-					{deleteButton}
+					{publishedAt && deleteButton}
 				</div>
 			</div>
 		</div>

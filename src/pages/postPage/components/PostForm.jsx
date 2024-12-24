@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Button, Icon, Input } from '../../../components';
 import { SpecialPanel } from './SpecialPanel';
 import { useNavigate } from 'react-router-dom';
-import { useRef } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { sanitizeContent } from './utils';
 import { useDispatch } from 'react-redux';
 import {
@@ -14,32 +14,35 @@ import {
 import { useServerRequest } from '../../../hooks';
 
 const PostFormContainer = ({ className, post }) => {
-	const titleRef = useRef(null);
-	const imgRef = useRef(null);
+	const [imageUrlValue, setImageUrlValue] = useState(post.imageUrl);
+	const [titleValue, setTitleValue] = useState(post.title);
 	const contentRef = useRef(null);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const requestServer = useServerRequest();
 
+	useLayoutEffect(() => {
+		setImageUrlValue(post.imageUrl);
+		setTitleValue(post.title);
+	}, [post.imageUrl, post.title]);
+
 	const onSave = () => {
-		const newImgUrl = imgRef.current.value;
-		const newTitle = titleRef.current.value;
 		const newContent = sanitizeContent(contentRef.current.innerHTML);
 
 		dispatch(
 			savePostAsync(requestServer, {
 				id: post.id,
-				imageUrl: newImgUrl,
-				title: newTitle,
+				imageUrl: imageUrlValue,
+				title: titleValue,
 				content: newContent,
 			}),
-		).then(() => navigate(`/post/${post.id}`));
+		).then(({ id }) => navigate(`/post/${id}`));
 	};
 
 	const onPostRemove = () => {
 		dispatch(
 			openModal({
-				text: 'Удалить пост?',
+				question: 'Удалить пост?',
 				onConfirm: () => {
 					dispatch(removePostAsync(requestServer, post.id)).then(() =>
 						navigate(`/`),
@@ -54,15 +57,14 @@ const PostFormContainer = ({ className, post }) => {
 	return (
 		<div className={className}>
 			<Input
-				ref={titleRef}
-				width="100%"
-				defaultValue={post.title}
-				placeholder="Заголовок"
+				value={titleValue}
+				placeholder="Введите заголовок"
+				onChange={({ target }) => setTitleValue(target.value)}
 			/>
 			<Input
-				ref={imgRef}
-				defaultValue={post.imageUrl}
+				value={imageUrlValue}
 				placeholder="Ссылка на изображение"
+				onChange={({ target }) => setImageUrlValue(target.value)}
 			/>
 
 			<SpecialPanel
@@ -107,6 +109,9 @@ export const PostForm = styled(PostFormContainer)`
 	padding: 40px 80px;
 	& .post-text {
 		font-size: 18px;
+		padding: 10px;
 		white-space: pre-line;
+		border: 1px solid grey;
+		min-height: 160px;
 	}
 `;

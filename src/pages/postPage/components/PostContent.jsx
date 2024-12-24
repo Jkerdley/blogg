@@ -14,7 +14,7 @@ const PostContentcontainer = ({ className, post }) => {
 	const onPostRemove = () => {
 		dispatch(
 			openModal({
-				text: 'Удалить пост?',
+				question: 'Удалить пост?',
 				onConfirm: () => {
 					dispatch(removePostAsync(requestServer, post.id)).then(() =>
 						navigate(`/`),
