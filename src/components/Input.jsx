@@ -10,6 +10,7 @@ export const Input = styled(InputContainer)`
 	font-size: 18px;
 	margin-bottom: 10px;
 	min-width: ${(width = '100%') => width};
+	min-height: 38px;
 	padding: 10px;
 	border-radius: 10px;
 	border: 1px solid grey;

@@ -23,7 +23,7 @@ const ModalWindowContainer = ({ className }) => {
 		<div className={className}>
 			<div className="overlay"></div>
 			<div className="modal-box">
-				<h3>Удалить комментарий?{question}</h3>
+				<h3>{question}</h3>
 				<div className="buttons">
 					<Button
 						width="120px"

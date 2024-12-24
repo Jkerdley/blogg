@@ -6,25 +6,30 @@ import { useServerRequest } from '../../hooks';
 import { loadPostAsync, RESET_POST_DATA } from '../../store/actions';
 import { useEffect, useLayoutEffect } from 'react';
 import { selectPost } from '../../store/selectors';
+// import { initialPostState } from '../../store/reducers';
 
 const PostContainer = ({ className }) => {
 	const dispatch = useDispatch();
 	const params = useParams();
+	const isCreating = useMatch('/post');
 	const isEditing = useMatch('/post/:id/edit');
 	const requestServer = useServerRequest();
 	const post = useSelector(selectPost);
 
 	useLayoutEffect(() => {
 		dispatch(RESET_POST_DATA);
-	}, [dispatch]);
+	}, [dispatch, isCreating]);
 
 	useEffect(() => {
+		if (isCreating) {
+			return;
+		}
 		dispatch(loadPostAsync(requestServer, params.id));
-	}, [requestServer, dispatch, params.id]);
+	}, [requestServer, dispatch, params.id, isCreating]);
 
 	return (
 		<div className={className}>
-			{isEditing ? (
+			{isCreating || isEditing ? (
 				<PostForm post={post} />
 			) : (
 				<>

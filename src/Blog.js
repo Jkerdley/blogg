@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 import { Route, Routes } from 'react-router-dom';
 import { StyledHeader, Footer, Page, Modal } from './components';
-import { Authorisation, Post, Registration, UsersPage } from './pages/index.js';
+import { Authorisation, NewPost, Post, Registration, UsersPage } from './pages/index.js';
 import { useLayoutEffect } from 'react';
 import { setUser } from './store/actions';
 import { useDispatch } from 'react-redux';
-import { PostForm } from './pages/postPage/components';
 
 const AppColumn = styled.div`
 	display: flex;
@@ -44,6 +43,7 @@ function Blog() {
 					<Route path="/authError" element={<div>authError</div>} />
 					<Route path="/users" element={<UsersPage />} />
 					<Route path="/posts" element={<div>Posts</div>} />
+					<Route path="/post" element={<Post />} />
 					<Route path="/post/:id" element={<Post />} />
 					<Route path="/post/:id/edit" element={<Post />} />
 					<Route path="/*" element={<div>404</div>} />

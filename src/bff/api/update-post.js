@@ -4,7 +4,7 @@ export const updatePost = (newPostData) =>
 		headers: { 'Content-type': 'application/json;charset=utf-8' },
 		body: JSON.stringify({
 			title: newPostData.title,
-			image_url: newPostData.imageUrl,
+			img_url: newPostData.imageUrl,
 			content: newPostData.content,
 		}),
 	}).then((loadedPost) => loadedPost.json());
