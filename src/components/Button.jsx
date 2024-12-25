@@ -23,10 +23,11 @@ export const Button = styled(ButtonContainer)`
 	background-color: ${({ bgcolor = '#ececec' }) => bgcolor};
 	border-radius: 10px;
 	box-shadow: ${({ shadow = '2px 2px 6px #cacaca' }) => shadow};
-	cursor: pointer;
+	cursor: ${({ disabled }) => (disabled ? '' : 'pointer')};
+
 	&:hover {
-		background-color: #c5c5c5;
-		box-shadow: 0px 0px 0px #cacaca;
+		background-color: ${({ disabled }) => (disabled ? '' : '#c5c5c5')};
+		box-shadow: ${({ disabled }) => (disabled ? '' : '0px 0px 0px #cacaca')};
 		transition:
 			background-color 0.25s ease,
 			box-shadow 0.2s ease;
