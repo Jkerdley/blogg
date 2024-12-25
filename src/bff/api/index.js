@@ -14,3 +14,4 @@ export * from '../api/deleteComment';
 export * from '../api/update-post';
 export * from '../api/delete-post';
 export * from '../api/add-post';
+export * from '../api/get-posts';
