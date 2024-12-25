@@ -1,4 +1,3 @@
-import { ACTION_TYPE } from '../actions/index';
 import { ROLES } from '../../constants/roles';
 
 const initialPostsState = {
