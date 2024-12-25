@@ -20,9 +20,9 @@ export const Button = styled(ButtonContainer)`
 	min-width: ${({ width = 'auto' }) => width};
 	font-size: 16px;
 	font-weight: 600;
-	background-color: ${({ bgcolor = '#ececec' }) => bgcolor};
+	background-color: ${({ bgcolor = '#f3f3f3' }) => bgcolor};
 	border-radius: 10px;
-	box-shadow: ${({ shadow = '2px 2px 6px #cacaca' }) => shadow};
+	box-shadow: ${({ shadow = '2px 2px 6px #e7e7e7' }) => shadow};
 	cursor: ${({ disabled }) => (disabled ? '' : 'pointer')};
 
 	&:hover {

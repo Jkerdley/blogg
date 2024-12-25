@@ -7,14 +7,19 @@ import { PAGINATION_LIMIT } from '../../constants/limits';
 
 const MainContainer = ({ className }) => {
 	const [posts, setPosts] = useState([]);
-	const [page, setPage] = useState(1);
+	const [currentPage, setCurrentPage] = useState(1);
 	const requestServer = useServerRequest();
 
 	useEffect(() => {
-		requestServer('fetchPosts', page, PAGINATION_LIMIT).then((posts) => {
-			setPosts(posts.response);
-		});
-	}, [requestServer, page]);
+		requestServer('fetchPosts', currentPage, PAGINATION_LIMIT)
+			.then((posts) => {
+				setPosts(posts.response);
+				console.log('Updated posts:', posts.response);
+			})
+			.catch((error) => {
+				console.error('Error fetching posts:', error);
+			});
+	}, [requestServer, currentPage]);
 
 	return (
 		<div className={className}>
@@ -31,7 +36,7 @@ const MainContainer = ({ className }) => {
 					/>
 				))}
 			</div>
-			<Pagination setPage={setPage} page={page} />
+			<Pagination setCurrentPage={setCurrentPage} prevPage={currentPage} />
 		</div>
 	);
 };
