@@ -1,30 +1,37 @@
 import styled from 'styled-components';
 import { Button } from '../../components';
 
-const PaginationContainer = ({ className, setPage, page }) => {
+const PaginationContainer = ({ className, setCurrentPage, prevPage }) => {
+	const handleNextPage = () => {
+		setCurrentPage((prevPage) => prevPage + 1);
+	};
+
+	const handlePrevPage = () => {
+		setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+	};
 	return (
 		<div className={className}>
 			<Button
-				disabled={page === 1}
+				disabled={prevPage === 1}
 				margin="0 20px 0 0"
 				padding="0 20px 0 20px"
-				onClick={() => setPage(1)}
+				onClick={() => setCurrentPage(1)}
 			>
 				в начало
 			</Button>
 			<Button
-				disabled={page === 1}
+				disabled={prevPage === 1}
 				margin="0 20px 0 0"
 				padding="0 20px 0 20px"
-				onClick={() => setPage(page - 1)}
+				onClick={handlePrevPage}
 			>
 				предыдущая
 			</Button>
-			<div className="current-page">Страница: {page}</div>
-			<Button margin="0 20px 0 20px" padding="0 20px 0 20px" onClick={() => setPage(page + 1)}>
+			<div className="current-page">Страница: {prevPage}</div>
+			<Button margin="0 20px 0 20px" padding="0 20px 0 20px" onClick={handleNextPage}>
 				следующая
 			</Button>
-			<Button margin="0 20px 0 0" padding="0 20px 0 20px" onClick={() => setPage(1)}>
+			<Button margin="0 20px 0 0" padding="0 20px 0 20px" onClick={() => setCurrentPage(1)}>
 				в конец
 			</Button>
 		</div>
