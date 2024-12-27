@@ -4,11 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Comments, PostContent, PostForm } from './components';
 import { useServerRequest } from '../../hooks';
 import { loadPostAsync, RESET_POST_DATA } from '../../store/actions';
-import { useEffect, useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { selectPost } from '../../store/selectors';
+import { Error } from '../../components';
 // import { initialPostState } from '../../store/reducers';
 
 const PostContainer = ({ className }) => {
+	const [error, setError] = useState(true);
+	const [isLoading, setIsLoading] = useState(true);
 	const dispatch = useDispatch();
 	const params = useParams();
 	const isCreating = useMatch('/post');
@@ -22,12 +25,22 @@ const PostContainer = ({ className }) => {
 
 	useEffect(() => {
 		if (isCreating) {
+			setIsLoading(false);
 			return;
 		}
-		dispatch(loadPostAsync(requestServer, params.id));
+		dispatch(loadPostAsync(requestServer, params.id)).then((postData) => {
+			setError(postData.error);
+			setIsLoading(false);
+		});
 	}, [requestServer, dispatch, params.id, isCreating]);
 
-	return (
+	if (isLoading) {
+		return null;
+	}
+
+	return error ? (
+		<Error error={error} />
+	) : (
 		<div className={className}>
 			{isCreating || isEditing ? (
 				<PostForm post={post} />
