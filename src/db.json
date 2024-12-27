@@ -13,13 +13,6 @@
       "password": "qwerty1",
       "role_id": 1,
       "registered_at": "2043-10-20 23:00"
-    },
-    {
-      "id": "026e",
-      "login": "zaka",
-      "password": "qwerty",
-      "role_id": 0,
-      "registered_at": "2058-04-13 22:47"
     }
   ],
   "roles": [
@@ -264,6 +257,15 @@
         "login": "john",
         "roleId": 0
       }
+    },
+    {
+      "hash": "0.64664121920835260226567697827704250812530517578125",
+      "user": {
+        "id": "1123",
+        "login": "john",
+        "roleId": 0
+      },
+      "id": "z-nKqSd"
     }
   ]
 }

@@ -1,15 +1,7 @@
 import styled from 'styled-components';
-import { H2 } from './h2';
+import { Error } from './Error';
 
-const ContentContainer = ({ children, error }) =>
-	error ? (
-		<>
-			<H2>Ошибка</H2>
-			<div>{error}</div>
-		</>
-	) : (
-		children
-	);
+const ContentContainer = ({ children, error }) => (error ? <Error error={error} /> : children);
 
 export const Content = styled(ContentContainer)`
 	display: flex;
