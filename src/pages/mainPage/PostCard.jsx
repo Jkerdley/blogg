@@ -3,14 +3,7 @@ import styled from 'styled-components';
 import { Icon } from '../../components';
 import { Link } from 'react-router-dom';
 
-const PostCardContainer = ({
-	className,
-	id,
-	title,
-	imageUrl,
-	publishedAt,
-	commentsCount,
-}) => {
+const PostCardContainer = ({ className, id, title, imageUrl, publishedAt, commentsCount }) => {
 	return (
 		<div className={className}>
 			<Link to={`/post/${id}`}>
