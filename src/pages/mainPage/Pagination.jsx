@@ -51,8 +51,12 @@ const PaginationContainer = ({ className, setCurrentPage, prevPage, lastPage }) 
 export const Pagination = styled(PaginationContainer)`
 	display: flex;
 	justify-content: center;
-	align-items: center;
+	position: absolute;
+	bottom: 20px;
+	padding: 0 35px;
 	margin: 0 0 20px;
+	width: 100%;
+	bottom: 140px;
 	& .current-page {
 		display: flex;
 		flex-direction: column;

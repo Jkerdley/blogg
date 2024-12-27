@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const Div = styled.div`
 	margin-top: 120px;
+	min-height: 100%;
 `;
 
 export const Page = ({ children }) => {
