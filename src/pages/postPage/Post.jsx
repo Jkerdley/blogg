@@ -6,16 +6,17 @@ import { useServerRequest } from '../../hooks';
 import { loadPostAsync, RESET_POST_DATA } from '../../store/actions';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { selectPost } from '../../store/selectors';
-import { Error } from '../../components';
+import { Error, PrivateContent } from '../../components';
+import { ROLES } from '../../bff/constants';
 // import { initialPostState } from '../../store/reducers';
 
 const PostContainer = ({ className }) => {
-	const [error, setError] = useState(true);
+	const [error, setError] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const dispatch = useDispatch();
 	const params = useParams();
-	const isCreating = useMatch('/post');
-	const isEditing = useMatch('/post/:id/edit');
+	const isCreating = !!useMatch('/post');
+	const isEditing = !!useMatch('/post/:id/edit');
 	const requestServer = useServerRequest();
 	const post = useSelector(selectPost);
 
@@ -37,21 +38,20 @@ const PostContainer = ({ className }) => {
 	if (isLoading) {
 		return null;
 	}
-
-	return error ? (
-		<Error error={error} />
-	) : (
-		<div className={className}>
-			{isCreating || isEditing ? (
-				<PostForm post={post} />
-			) : (
-				<>
-					<PostContent post={post} />
-					<Comments comments={post.comments} postId={post.id} />
-				</>
-			)}
-		</div>
-	);
+	const SpecificPostPage =
+		isCreating || isEditing ? (
+			<PrivateContent access={[ROLES.ADMIN]} serverError={error}>
+				<div className={className}>
+					<PostForm post={post} />
+				</div>
+			</PrivateContent>
+		) : (
+			<div className={className}>
+				<PostContent post={post} />
+				<Comments comments={post.comments} postId={post.id} />
+			</div>
+		);
+	return error ? <Error error={error} /> : SpecificPostPage;
 };
 
 export const Post = styled(PostContainer)``;

@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 import { useServerRequest } from '../hooks';
 import { H2 } from '../components/index.js';
 import { UserRow, TableRow } from './components';
-import { Content } from '../components';
+import { PrivateContent } from '../components';
 import styled from 'styled-components';
 import { ROLES } from '../constants/roles.js';
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectUserRole } from '../store/selectors/select-user-role.js';
+import { checkAccess } from '../utils/check-access.js';
 
 const UsersList = styled.div`
 	display: flex;
@@ -17,6 +18,7 @@ const UsersList = styled.div`
 `;
 
 const UsersPageContainer = ({ className }) => {
+	const userRole = useSelector(selectUserRole);
 	const [users, setUsers] = useState([]);
 	const [roles, setRoles] = useState([]);
 	const [errorMessage, setErrorMessage] = useState(null);
@@ -25,6 +27,9 @@ const UsersPageContainer = ({ className }) => {
 	const userRoleId = useSelector(selectUserRole);
 
 	useEffect(() => {
+		if (!checkAccess([ROLES.ADMIN], userRole)) {
+			return;
+		}
 		Promise.all([requestServer('fetchUsers'), requestServer('fetchUserRoles')]).then(
 			([usersResponse, rolesResponse]) => {
 				if (usersResponse.error || rolesResponse.error) {
@@ -36,9 +41,12 @@ const UsersPageContainer = ({ className }) => {
 				setRoles(rolesResponse.response);
 			},
 		);
-	}, [requestServer, shouldUpdateUserList]);
+	}, [requestServer, shouldUpdateUserList, userRole]);
 
 	const onUserRemove = (userId) => {
+		if (!checkAccess([ROLES.ADMIN], userRole)) {
+			return;
+		}
 		requestServer('removeUser', userId).then(() => {
 			setShouldUpdateUserList(!shouldUpdateUserList);
 		});
@@ -49,8 +57,8 @@ const UsersPageContainer = ({ className }) => {
 	}
 
 	return (
-		<div className={className}>
-			<Content error={errorMessage}>
+		<PrivateContent access={[ROLES.ADMIN]} error={errorMessage}>
+			<div className={className}>
 				<H2>Пользователи</H2>
 				<UsersList>
 					<TableRow>
@@ -70,8 +78,8 @@ const UsersPageContainer = ({ className }) => {
 						/>
 					))}
 				</UsersList>
-			</Content>
-		</div>
+			</div>
+		</PrivateContent>
 	);
 };
 

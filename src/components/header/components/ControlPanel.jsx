@@ -2,11 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Icon } from '../../Icon';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-	selectUserRole,
-	selectUserLogin,
-	selectUserSession,
-} from '../../../store/selectors';
+import { selectUserRole, selectUserLogin, selectUserSession } from '../../../store/selectors';
 import { ROLES } from '../../../constants/roles';
 import { logout } from '../../../store/actions';
 
@@ -57,18 +53,13 @@ const ControlPanelContainer = ({ className }) => {
 			<RightAligned>
 				{roleId === ROLES.GUEST ? (
 					<StyledLink padding="0 10px 0 20px" to="/login">
-						ВОЙТИ{' '}
-						<Icon id="fa-sign-in" size="20px" margin="5px  5px  5px 5px" />
+						ВОЙТИ <Icon id="fa-sign-in" size="20px" margin="5px  5px  5px 5px" />
 					</StyledLink>
 				) : (
 					<>
 						<UserLogin>{login}</UserLogin>
 						<StyledLink padding="0 10px 0 20px" onClick={onLogout}>
-							<Icon
-								id="fa-sign-out"
-								size="20px"
-								margin="5px  5px  5px 5px"
-							/>
+							<Icon id="fa-sign-out" size="20px" margin="5px  5px  5px 5px" />
 						</StyledLink>
 					</>
 				)}
