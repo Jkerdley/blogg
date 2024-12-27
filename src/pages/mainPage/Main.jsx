@@ -4,17 +4,20 @@ import { useServerRequest } from '../../hooks';
 import { PostCard } from './PostCard';
 import { Pagination } from './Pagination';
 import { PAGINATION_LIMIT } from '../../constants/limits';
+import { getLastPageFromLinks } from './utils';
 
 const MainContainer = ({ className }) => {
 	const [posts, setPosts] = useState([]);
 	const [currentPage, setCurrentPage] = useState(1);
+	const [lastPage, setLastPage] = useState(1);
 	const requestServer = useServerRequest();
 
 	useEffect(() => {
 		requestServer('fetchPosts', currentPage, PAGINATION_LIMIT)
-			.then((posts) => {
-				setPosts(posts.response);
-				console.log('Updated posts:', posts.response);
+			.then(({ response: { posts, links } }) => {
+				setPosts(posts);
+				const lastLinkPage = getLastPageFromLinks(links);
+				setLastPage(lastLinkPage);
 			})
 			.catch((error) => {
 				console.error('Error fetching posts:', error);
@@ -35,8 +38,10 @@ const MainContainer = ({ className }) => {
 						imageUrl={imageUrl}
 					/>
 				))}
-			</div>
-			<Pagination setCurrentPage={setCurrentPage} prevPage={currentPage} />
+			</div>{' '}
+			{lastPage > 1 && (
+				<Pagination setCurrentPage={setCurrentPage} prevPage={currentPage} lastPage={lastPage} />
+			)}
 		</div>
 	);
 };
