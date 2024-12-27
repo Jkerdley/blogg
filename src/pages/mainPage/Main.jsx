@@ -27,8 +27,6 @@ const MainContainer = ({ className }) => {
 			.then(({ response: { posts, links } }) => {
 				setPosts(posts);
 				const lastLinkPage = getLastPageFromLinks(links);
-				console.log('links', links);
-
 				setLastPage(lastLinkPage);
 			})
 			.catch((error) => {
@@ -41,7 +39,7 @@ const MainContainer = ({ className }) => {
 			<div className="search-input">
 				<Search searchPhrase={searchPhrase} onChange={onSearch} />
 
-				{posts.length ? (
+				{posts.length > 0 ? (
 					<div className="post-list">
 						{posts.map(({ id, title, publishedAt, commentsCount, imageUrl }) => (
 							<PostCard
@@ -55,7 +53,7 @@ const MainContainer = ({ className }) => {
 						))}
 					</div>
 				) : (
-					<div className="noposts-error-message">Статьи не найдены</div>
+					<div className="noposts-error-message">...</div>
 				)}
 			</div>
 			{lastPage > 1 && posts.length > 0 && (

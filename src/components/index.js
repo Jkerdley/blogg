@@ -6,6 +6,6 @@ export * from '../components/Button.jsx';
 export * from '../components/Icon.jsx';
 export * from '../components/h2.jsx';
 export * from './AuthFormError.jsx';
-export * from './Content.js';
+export * from './PrivateContent.js';
 export * from './Modal.jsx';
 export * from './Error.jsx';

@@ -15,6 +15,6 @@ export const Error = styled(ErrorContainer)`
 	align-items: center;
 	justify-content: center;
 	& > div {
-		font-size: 20px;
+		font-size: 18px;
 	}
 `;
