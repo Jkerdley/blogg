@@ -8,7 +8,6 @@ import { useEffect, useLayoutEffect, useState } from 'react';
 import { selectPost } from '../../store/selectors';
 import { Error, PrivateContent } from '../../components';
 import { ROLES } from '../../bff/constants';
-// import { initialPostState } from '../../store/reducers';
 
 const PostContainer = ({ className }) => {
 	const [error, setError] = useState(null);
@@ -38,6 +37,7 @@ const PostContainer = ({ className }) => {
 	if (isLoading) {
 		return null;
 	}
+
 	const SpecificPostPage =
 		isCreating || isEditing ? (
 			<PrivateContent access={[ROLES.ADMIN]} serverError={error}>
@@ -54,4 +54,6 @@ const PostContainer = ({ className }) => {
 	return error ? <Error error={error} /> : SpecificPostPage;
 };
 
-export const Post = styled(PostContainer)``;
+export const Post = styled(PostContainer)`
+	margin-bottom: 140px;
+`;

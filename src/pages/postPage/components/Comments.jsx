@@ -4,10 +4,12 @@ import { Comment } from './';
 import { Button, Icon } from '../../../components';
 import { useServerRequest } from '../../../hooks';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUserId } from '../../../store/selectors';
+import { selectUserId, selectUserRole } from '../../../store/selectors';
 import { addCommentAsync } from '../../../store/actions';
+import { ROLES } from '../../../constants/roles';
 
 const CommentsContainer = ({ className, comments, postId }) => {
+	const userRole = useSelector(selectUserRole);
 	const [newComment, setNewComment] = useState('');
 	const userId = useSelector(selectUserId);
 	const dispatch = useDispatch();
@@ -16,28 +18,32 @@ const CommentsContainer = ({ className, comments, postId }) => {
 		dispatch(addCommentAsync(requestServer, userId, postId, content));
 		setNewComment('');
 	};
+	const isGuest = userRole === ROLES.GUEST;
+
 	return (
 		<div className={className}>
-			<div className="new-comment-area">
-				<textarea
-					name="comment"
-					value={newComment}
-					placeholder="Комментарий..."
-					onChange={({ target }) => {
-						setNewComment(target.value);
-					}}
-				></textarea>
-				<Button
-					margin="0 0 0 2px"
-					bgcolor="white"
-					shadow="none"
-					onClick={() => {
-						onNewCommentAdd(userId, postId, newComment);
-					}}
-				>
-					<Icon size="18px" id="fa-paper-plane-o" margin="0 8px 0 6px" />
-				</Button>
-			</div>
+			{!isGuest && (
+				<div className="new-comment-area">
+					<textarea
+						name="comment"
+						value={newComment}
+						placeholder="Комментарий..."
+						onChange={({ target }) => {
+							setNewComment(target.value);
+						}}
+					></textarea>
+					<Button
+						margin="0 0 0 2px"
+						bgcolor="white"
+						shadow="none"
+						onClick={() => {
+							onNewCommentAdd(userId, postId, newComment);
+						}}
+					>
+						<Icon size="18px" id="fa-paper-plane-o" margin="0 8px 0 6px" />
+					</Button>
+				</div>
+			)}
 
 			<div className="comments">
 				{comments.map(({ id, author, content, publishedAt, postId }) => (
