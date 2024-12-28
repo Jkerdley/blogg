@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { Button } from './Button';
 import { useSelector } from 'react-redux';
@@ -25,20 +24,10 @@ const ModalWindowContainer = ({ className }) => {
 			<div className="modal-box">
 				<h3>{question}</h3>
 				<div className="buttons">
-					<Button
-						width="120px"
-						margin="20px 0"
-						shadow="none"
-						onClick={onConfirm}
-					>
+					<Button width="120px" margin="20px 0" shadow="none" onClick={onConfirm}>
 						Да
 					</Button>
-					<Button
-						width="120px"
-						shadow="none"
-						margin="20px 0"
-						onClick={onCancel}
-					>
+					<Button width="120px" shadow="none" margin="20px 0" onClick={onCancel}>
 						Отмена
 					</Button>
 				</div>

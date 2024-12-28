@@ -5,6 +5,7 @@ import { CLOSE_MODAL, removeCommentAsync, openModal } from '../../../store/actio
 import { useServerRequest } from '../../../hooks';
 import { ROLES } from '../../../constants/roles';
 import { selectUserRole } from '../../../store/selectors';
+import PropTypes from 'prop-types';
 
 const CommentContainer = ({ className, id, author, publishedAt, content, postId }) => {
 	const userRole = useSelector(selectUserRole);
@@ -89,3 +90,11 @@ export const Comment = styled(CommentContainer)`
 		margin-top: 6px;
 	}
 `;
+
+Comment.propTypes = {
+	id: PropTypes.string.isRequired,
+	author: PropTypes.string.isRequired,
+	publishedAt: PropTypes.string.isRequired,
+	content: PropTypes.string.isRequired,
+	postId: PropTypes.string.isRequired,
+};

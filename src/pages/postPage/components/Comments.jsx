@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectUserId, selectUserRole } from '../../../store/selectors';
 import { addCommentAsync } from '../../../store/actions';
 import { ROLES } from '../../../constants/roles';
+import PropTypes from 'prop-types';
+import { PROP_TYPE } from '../../../constants/prop-type';
 
 const CommentsContainer = ({ className, comments, postId }) => {
 	const userRole = useSelector(selectUserRole);
@@ -78,3 +80,8 @@ export const Comments = styled(CommentsContainer)`
 		height: auto;
 	}
 `;
+
+Comments.propTypes = {
+	comments: PropTypes.arrayOf(PROP_TYPE.COMMENT).isRequired,
+	postId: PropTypes.string.isRequired,
+};

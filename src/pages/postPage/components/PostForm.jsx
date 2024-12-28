@@ -5,12 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { sanitizeContent } from './utils';
 import { useDispatch } from 'react-redux';
-import {
-	CLOSE_MODAL,
-	openModal,
-	removePostAsync,
-	savePostAsync,
-} from '../../../store/actions';
+import { CLOSE_MODAL, openModal, removePostAsync, savePostAsync } from '../../../store/actions';
 import { useServerRequest } from '../../../hooks';
 
 const PostFormContainer = ({ className, post }) => {
@@ -44,9 +39,7 @@ const PostFormContainer = ({ className, post }) => {
 			openModal({
 				question: 'Удалить пост?',
 				onConfirm: () => {
-					dispatch(removePostAsync(requestServer, post.id)).then(() =>
-						navigate(`/`),
-					);
+					dispatch(removePostAsync(requestServer, post.id)).then(() => navigate(`/`));
 					dispatch(CLOSE_MODAL);
 				},
 				onCancel: () => dispatch(CLOSE_MODAL),
@@ -80,12 +73,7 @@ const PostFormContainer = ({ className, post }) => {
 					</Button>
 				}
 				deleteButton={
-					<Button
-						bgcolor="white"
-						shadow="none"
-						padding="1px 0 0 5px"
-						onClick={onPostRemove}
-					>
+					<Button bgcolor="white" shadow="none" padding="1px 0 0 5px" onClick={onPostRemove}>
 						<Icon size="21px" id="fa-trash-o" margin="1px 6px 0 0" />
 					</Button>
 				}
