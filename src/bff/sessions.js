@@ -14,7 +14,6 @@ export const sessions = {
 			return;
 		}
 		deleteSession(session.id);
-		delete this.list[hash];
 	},
 	async access(hash, haveAccessRoles) {
 		const dbSession = await getSession(hash);

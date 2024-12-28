@@ -53,7 +53,7 @@ const MainContainer = ({ className }) => {
 						))}
 					</div>
 				) : (
-					<div className="noposts-error-message">...</div>
+					<div className="noposts-error-message">Ничего не найдено...</div>
 				)}
 			</div>
 			{lastPage > 1 && posts.length > 0 && (
@@ -78,7 +78,7 @@ export const Main = styled(MainContainer)`
 		text-align: center;
 		font-size: 18px;
 		color: red;
-		margin-top: 20px;
+		margin-top: 40px;
 	}
 	& .post-list {
 		display: flex;

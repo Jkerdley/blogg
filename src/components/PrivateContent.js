@@ -4,6 +4,8 @@ import { Error } from './Error';
 import { selectUserRole } from '../store/selectors';
 import { ERRORS } from '../constants/error';
 import { checkAccess } from '../utils/check-access';
+import PropTypes from 'prop-types';
+import { PROP_TYPE } from '../constants/prop-type';
 
 const ContentContainer = ({ children, access, serverError = null }) => {
 	const userRole = useSelector(selectUserRole);
@@ -20,3 +22,9 @@ export const PrivateContent = styled(ContentContainer)`
 	background-color: yellow;
 	font-size: 18px;
 `;
+
+PrivateContent.propTypes = {
+	children: PropTypes.node.isRequired,
+	access: PropTypes.arrayOf(PROP_TYPE.ROLE_ID).isRequired,
+	serverError: PROP_TYPE.ERROR,
+};

@@ -4,6 +4,7 @@ import { ROLES } from '../../../constants/roles';
 import { checkAccess } from '../../../utils/check-access';
 import { useSelector } from 'react-redux';
 import { selectUserRole } from '../../../store/selectors';
+import PropTypes from 'prop-types';
 
 const SpecialPanelContainer = ({ className, publishedAt, editButton, saveButton, deleteButton }) => {
 	const roleId = useSelector(selectUserRole);
@@ -47,3 +48,9 @@ export const SpecialPanel = styled(SpecialPanelContainer)`
 		align-items: center;
 	}
 `;
+SpecialPanel.propTypes = {
+	publishedAt: PropTypes.string.isRequired,
+	editButton: PropTypes.node,
+	saveButton: PropTypes.node,
+	deleteButton: PropTypes.node,
+};

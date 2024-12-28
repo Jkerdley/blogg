@@ -3,6 +3,9 @@ import { Button, Icon } from '../../components';
 import { TableRow } from './TableRow';
 import { useState } from 'react';
 import { useServerRequest } from '../../hooks';
+import PropTypes from 'prop-types';
+import { PROP_TYPE } from '../../constants/prop-type';
+import { ROLES } from '../../bff/constants';
 
 const RoleAndButtonContainer = styled.div`
 	display: flex;
@@ -22,17 +25,9 @@ const RoleAndButtonContainer = styled.div`
 	}
 `;
 
-const UserRowContainer = ({
-	className,
-	id,
-	login,
-	registeredAt,
-	roleId: userRoleId,
-	roles,
-	onUserRemove,
-}) => {
-	const [selectedRoleId, setSelectedRoleId] = useState(userRoleId);
-	const [initialRoleId, setInitialRoleId] = useState(userRoleId);
+const UserRowContainer = ({ className, id, login, registeredAt, roleId, roles, onUserRemove }) => {
+	const [selectedRoleId, setSelectedRoleId] = useState(roleId);
+	const [initialRoleId, setInitialRoleId] = useState(roleId);
 
 	const onRoleChange = ({ target }) => {
 		setSelectedRoleId(Number(target.value));
@@ -56,8 +51,8 @@ const UserRowContainer = ({
 				<div className="user-role-column">
 					<RoleAndButtonContainer>
 						<select value={selectedRoleId} onChange={onRoleChange}>
-							{roles.map(({ id: roleId, name: roleName }) => (
-								<option value={roleId}>{roleName}</option>
+							{roles.map(({ id, name: roleName }) => (
+								<option value={id}>{roleName}</option>
 							))}
 						</select>
 						<Button
@@ -92,3 +87,11 @@ export const UserRow = styled(UserRowContainer)`
 	display: flex;
 	margin-top: 12px;
 `;
+UserRow.propTypes = {
+	id: PropTypes.string.isRequired,
+	login: PropTypes.string.isRequired,
+	registeredAt: PropTypes.string.isRequired,
+	roleId: PROP_TYPE.ROLE_ID.isRequired,
+	roles: PropTypes.arrayOf(PROP_TYPE.ROLES).isRequired,
+	onUserRemove: PropTypes.func.isRequired,
+};
