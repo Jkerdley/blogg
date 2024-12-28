@@ -1,16 +1,19 @@
 import styled from 'styled-components';
 import { Button, Icon } from '../../../components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { CLOSE_MODAL, removeCommentAsync, openModal } from '../../../store/actions';
 import { useServerRequest } from '../../../hooks';
+import { ROLES } from '../../../constants/roles';
+import { selectUserRole } from '../../../store/selectors';
 
 const CommentContainer = ({ className, id, author, publishedAt, content, postId }) => {
+	const userRole = useSelector(selectUserRole);
 	const dispatch = useDispatch();
 	const requestServer = useServerRequest();
 	const onCommentRemove = (id) => {
 		dispatch(
 			openModal({
-				text: 'Удалить комментарий',
+				question: 'Удалить комментарий',
 				onConfirm: () => {
 					dispatch(removeCommentAsync(requestServer, postId, id));
 					dispatch(CLOSE_MODAL);
@@ -19,6 +22,7 @@ const CommentContainer = ({ className, id, author, publishedAt, content, postId 
 			}),
 		);
 	};
+	const isAdminOrModerator = [ROLES.ADMIN, ROLES.MODERATOR].includes(userRole);
 	return (
 		<div className={className}>
 			<div className="comment-container">
@@ -34,14 +38,17 @@ const CommentContainer = ({ className, id, author, publishedAt, content, postId 
 				</div>
 				<div className="comment-text">{content}</div>
 			</div>
-			<Button
-				className="delete-comment"
-				bgcolor="white"
-				shadow="none"
-				onClick={() => onCommentRemove(id)}
-			>
-				<Icon id="fa-trash-o" size="20px" />
-			</Button>
+
+			{isAdminOrModerator && (
+				<Button
+					className="delete-comment"
+					bgcolor="white"
+					shadow="none"
+					onClick={() => onCommentRemove(id)}
+				>
+					<Icon id="fa-trash-o" size="20px" />
+				</Button>
+			)}
 		</div>
 	);
 };

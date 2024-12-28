@@ -16,9 +16,7 @@ const PostContentcontainer = ({ className, post }) => {
 			openModal({
 				question: 'Удалить пост?',
 				onConfirm: () => {
-					dispatch(removePostAsync(requestServer, post.id)).then(() =>
-						navigate(`/`),
-					);
+					dispatch(removePostAsync(requestServer, post.id)).then(() => navigate(`/`));
 					dispatch(CLOSE_MODAL);
 				},
 				onCancel: () => dispatch(CLOSE_MODAL),
@@ -29,6 +27,7 @@ const PostContentcontainer = ({ className, post }) => {
 	const onEdit = () => {
 		navigate(`/post/${post.id}/edit`);
 	};
+
 	return (
 		<div className={className}>
 			<img src={post.imageUrl} alt={post.title} />
@@ -46,12 +45,7 @@ const PostContentcontainer = ({ className, post }) => {
 					</Button>
 				}
 				deleteButton={
-					<Button
-						bgcolor="white"
-						shadow="none"
-						padding="1px 0 0 5px"
-						onClick={onPostRemove}
-					>
+					<Button bgcolor="white" shadow="none" padding="1px 0 0 5px" onClick={onPostRemove}>
 						<Icon size="21px" id="fa-trash-o" margin="1px 6px 0 0" />
 					</Button>
 				}

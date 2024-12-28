@@ -13,6 +13,13 @@
       "password": "qwerty1",
       "role_id": 1,
       "registered_at": "2043-10-20 23:00"
+    },
+    {
+      "login": "test",
+      "password": "qwerty",
+      "role_id": 2,
+      "registered_at": "2036-12-03 15:07",
+      "id": "2DPZxX6"
     }
   ],
   "roles": [
@@ -161,6 +168,20 @@
       "post_id": "0004",
       "content": "Комментарий3",
       "published_at": "25.12.2024"
+    },
+    {
+      "author_id": "1123",
+      "post_id": "0002",
+      "content": "Тестовый комментарий",
+      "published_at": "28.12.2024",
+      "id": "cBJ-1jg"
+    },
+    {
+      "author_id": "1123",
+      "post_id": "0002",
+      "content": "COMMENTS",
+      "published_at": "28.12.2024",
+      "id": "Iio_wMw"
     }
   ],
   "sessions": [

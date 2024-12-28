@@ -1,27 +1,27 @@
 import styled from 'styled-components';
 import { Icon } from '../../../components';
+import { ROLES } from '../../../constants/roles';
+import { checkAccess } from '../../../utils/check-access';
+import { useSelector } from 'react-redux';
+import { selectUserRole } from '../../../store/selectors';
 
-const SpecialPanelContainer = ({
-	className,
-	publishedAt,
-	editButton,
-	saveButton,
-	deleteButton,
-}) => {
+const SpecialPanelContainer = ({ className, publishedAt, editButton, saveButton, deleteButton }) => {
+	const roleId = useSelector(selectUserRole);
+	const isAdminAccess = checkAccess([ROLES.ADMIN], roleId);
 	return (
 		<div className={className}>
 			<div className="date-and-icon">
 				<div className="published-at">
-					{publishedAt && (
-						<Icon id="fa-calendar-o" size="16px" margin="0 4px 0 0" />
-					)}
+					{publishedAt && <Icon id="fa-calendar-o" size="16px" margin="0 4px 0 0" />}
 					{publishedAt}
 				</div>
-				<div className="buttons">
-					{editButton}
-					{saveButton}
-					{publishedAt && deleteButton}
-				</div>
+				{isAdminAccess && (
+					<div className="buttons">
+						{editButton}
+						{saveButton}
+						{publishedAt && deleteButton}
+					</div>
+				)}
 			</div>
 		</div>
 	);
