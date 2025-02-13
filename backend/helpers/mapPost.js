@@ -10,6 +10,6 @@ module.exports = function (post) {
         comments: post.comments.map((comment) =>
             mongoose.isObjectIdOrHexString(comment) ? comment : mapComments(comment)
         ),
-        createdAt: post.createdAt,
+        createdAt: new Date(post.createdAt).toLocaleString("ru-RU").replace(",", ""),
     };
 };

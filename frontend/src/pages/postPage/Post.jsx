@@ -6,7 +6,7 @@ import { loadPostAsync, RESET_POST_DATA } from '../../store/actions';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { selectPost } from '../../store/selectors';
 import { Error, PrivateContent } from '../../components';
-import { ROLES } from '../../bff/constants';
+import { ROLES } from '../../constants/roles';
 
 const PostContainer = ({ className }) => {
 	const [error, setError] = useState(null);

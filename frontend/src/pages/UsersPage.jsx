@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useServerRequest } from '../hooks';
 import { H2 } from '../components/index.js';
 import { UserRow, TableRow } from './components';
 import { PrivateContent } from '../components';
@@ -9,6 +8,7 @@ import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectUserRole } from '../store/selectors/select-user-role.js';
 import { checkAccess } from '../utils/check-access.js';
+import { request } from '../utils/request.js';
 
 const UsersList = styled.div`
 	display: flex;
@@ -22,7 +22,6 @@ const UsersPageContainer = ({ className }) => {
 	const [users, setUsers] = useState([]);
 	const [roles, setRoles] = useState([]);
 	const [errorMessage, setErrorMessage] = useState(null);
-	const requestServer = useServerRequest();
 	const [shouldUpdateUserList, setShouldUpdateUserList] = useState(false);
 	const userRoleId = useSelector(selectUserRole);
 
@@ -30,24 +29,26 @@ const UsersPageContainer = ({ className }) => {
 		if (!checkAccess([ROLES.ADMIN], userRole)) {
 			return;
 		}
-		Promise.all([requestServer('fetchUsers'), requestServer('fetchUserRoles')]).then(
-			([usersResponse, rolesResponse]) => {
-				if (usersResponse.error || rolesResponse.error) {
-					setErrorMessage(usersResponse.error || rolesResponse.error);
-					return;
-				}
+		Promise.all([
+			request('http://localhost:3004/users'),
+			request('http://localhost:3004/users/roles'),
+		]).then(([usersResponse, rolesResponse]) => {
+			if (usersResponse.error || rolesResponse.error) {
+				setErrorMessage(usersResponse.error || rolesResponse.error);
+				return;
+			}
 
-				setUsers(usersResponse.response);
-				setRoles(rolesResponse.response);
-			},
-		);
-	}, [requestServer, shouldUpdateUserList, userRole]);
+			setUsers(usersResponse.data);
+			setRoles(rolesResponse.data);
+		});
+	}, [shouldUpdateUserList, userRole]);
+	console.log('users after useEffect', users);
 
 	const onUserRemove = (userId) => {
 		if (!checkAccess([ROLES.ADMIN], userRole)) {
 			return;
 		}
-		requestServer('removeUser', userId).then(() => {
+		request(`http://localhost:3004/users/${userId}`, 'DELETE').then(() => {
 			setShouldUpdateUserList(!shouldUpdateUserList);
 		});
 	};
@@ -66,12 +67,12 @@ const UsersPageContainer = ({ className }) => {
 						<div className="user-registered-at-column">Дата регистрации</div>
 						<div className="user-role-column">Роль</div>
 					</TableRow>
-					{users.map(({ id, login, registeredAt, roleId }) => (
+					{users.map(({ id, login, createdAt, roleId }) => (
 						<UserRow
 							key={id}
 							id={id}
 							login={login}
-							registeredAt={registeredAt}
+							createdAt={createdAt}
 							roleId={roleId}
 							roles={roles.filter(({ id }) => id !== ROLES.GUEST)}
 							onUserRemove={() => onUserRemove(id)}

@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import { Button, Icon } from '../../components';
 import { TableRow } from './TableRow';
 import { useState } from 'react';
-import { useServerRequest } from '../../hooks';
 import PropTypes from 'prop-types';
 import { PROP_TYPE } from '../../constants/prop-type';
+import { request } from '../../utils/request';
 
 const RoleAndButtonContainer = styled.div`
 	display: flex;
@@ -24,7 +24,7 @@ const RoleAndButtonContainer = styled.div`
 	}
 `;
 
-const UserRowContainer = ({ className, id, login, registeredAt, roleId, roles, onUserRemove }) => {
+const UserRowContainer = ({ className, id, login, createdAt, roleId, roles, onUserRemove }) => {
 	const [selectedRoleId, setSelectedRoleId] = useState(roleId);
 	const [initialRoleId, setInitialRoleId] = useState(roleId);
 
@@ -32,10 +32,10 @@ const UserRowContainer = ({ className, id, login, registeredAt, roleId, roles, o
 		setSelectedRoleId(Number(target.value));
 	};
 
-	const requestServer = useServerRequest();
-
 	const onUserRoleSave = (userId, userNewRoleId) => {
-		requestServer('updateUserRole', userId, userNewRoleId).then(() => {
+		console.log('userId, userNewRoleId', userId, userNewRoleId);
+
+		request(`http://localhost:3004/users/${userId}`, 'PATCH', { roleId: userNewRoleId }).then(() => {
 			setInitialRoleId(userNewRoleId);
 		});
 	};
@@ -46,12 +46,14 @@ const UserRowContainer = ({ className, id, login, registeredAt, roleId, roles, o
 		<div className={className}>
 			<TableRow border>
 				<div className="user-login-column">{login}</div>
-				<div className="user-registered-at-column">{registeredAt}</div>
+				<div className="user-registered-at-column">{createdAt}</div>
 				<div className="user-role-column">
 					<RoleAndButtonContainer>
 						<select value={selectedRoleId} onChange={onRoleChange}>
 							{roles.map(({ id, name: roleName }) => (
-								<option value={id}>{roleName}</option>
+								<option key={id} value={id}>
+									{roleName}
+								</option>
 							))}
 						</select>
 						<Button
@@ -89,7 +91,7 @@ export const UserRow = styled(UserRowContainer)`
 UserRow.propTypes = {
 	id: PropTypes.string.isRequired,
 	login: PropTypes.string.isRequired,
-	registeredAt: PropTypes.string.isRequired,
+	createdAt: PropTypes.string.isRequired,
 	roleId: PROP_TYPE.ROLE_ID.isRequired,
 	roles: PropTypes.arrayOf(PROP_TYPE.ROLES).isRequired,
 	onUserRemove: PropTypes.func.isRequired,
