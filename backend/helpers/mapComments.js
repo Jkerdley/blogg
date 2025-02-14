@@ -3,6 +3,6 @@ module.exports = function (comment) {
         content: comment.content,
         author: comment.author.login,
         id: comment.id,
-        createdAt: comment.createdAt,
+        createdAt: new Date(comment.createdAt).toLocaleString("ru-RU").replace(",", ""),
     };
 };
