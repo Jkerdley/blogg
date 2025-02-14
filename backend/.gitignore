@@ -8,10 +8,10 @@ frontend/node_modules
 .env
 # testing
 /coverage
-
+.env
 # production
 /build
-
+.env
 # misc
 .DS_Store
 .env.local
