@@ -33,8 +33,6 @@ const UserRowContainer = ({ className, id, login, createdAt, roleId, roles, onUs
 	};
 
 	const onUserRoleSave = (userId, userNewRoleId) => {
-		console.log('userId, userNewRoleId', userId, userNewRoleId);
-
 		request(`http://localhost:3004/users/${userId}`, 'PATCH', { roleId: userNewRoleId }).then(() => {
 			setInitialRoleId(userNewRoleId);
 		});

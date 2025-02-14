@@ -42,7 +42,6 @@ const UsersPageContainer = ({ className }) => {
 			setRoles(rolesResponse.data);
 		});
 	}, [shouldUpdateUserList, userRole]);
-	console.log('users after useEffect', users);
 
 	const onUserRemove = (userId) => {
 		if (!checkAccess([ROLES.ADMIN], userRole)) {
