@@ -30,8 +30,8 @@ const UsersPageContainer = ({ className }) => {
 			return;
 		}
 		Promise.all([
-			request('http://localhost:3004/users'),
-			request('http://localhost:3004/users/roles'),
+			request('http://localhost:3004/api/users'),
+			request('http://localhost:3004/api/users/roles'),
 		]).then(([usersResponse, rolesResponse]) => {
 			if (usersResponse.error || rolesResponse.error) {
 				setErrorMessage(usersResponse.error || rolesResponse.error);
@@ -47,7 +47,7 @@ const UsersPageContainer = ({ className }) => {
 		if (!checkAccess([ROLES.ADMIN], userRole)) {
 			return;
 		}
-		request(`http://localhost:3004/users/${userId}`, 'DELETE').then(() => {
+		request(`http://localhost:3004/api/users/${userId}`, 'DELETE').then(() => {
 			setShouldUpdateUserList(!shouldUpdateUserList);
 		});
 	};

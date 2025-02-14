@@ -9,7 +9,7 @@ const routes = require("./routes");
 const PORT = 3004;
 const app = express();
 
-// app.use(express.static("../frontend/build"));
+app.use(express.static("../frontend/build"));
 app.use(
     cors({
         origin: "http://localhost:3000",
@@ -19,17 +19,10 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 
-app.use("/", routes);
+app.use("/api", routes);
 
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING).then(() => {
     app.listen(PORT, () => {
         console.log(chalk.blueBright(`Сервер запущен на порту ${PORT}`));
     });
-    // // Обработка сигнала SIGUSR2, который отправляет nodemon перед перезапуском
-    // process.once("SIGUSR2", () => {
-    //     server.close(() => {
-    //         // После закрытия сервера пересылаем сигнал для корректного перезапуска
-    //         process.kill(process.pid, "SIGUSR2");
-    //     });
-    // });
 });
