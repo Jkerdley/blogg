@@ -72,7 +72,7 @@ const AuthorisationContainer = ({ className }) => {
 	useAuthFormReset(reset);
 
 	const onSubmit = ({ login, password }) => {
-		request('http://localhost:3004/api/login', 'POST', { login, password }).then(({ error, user }) => {
+		request('/api/login', 'POST', { login, password }).then(({ error, user }) => {
 			if (error) {
 				setServerError(`Ошибка запроса: ${error}`);
 				return;

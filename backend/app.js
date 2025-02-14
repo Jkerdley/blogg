@@ -1,5 +1,4 @@
 require("dotenv").config();
-const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
@@ -10,12 +9,12 @@ const PORT = 3004;
 const app = express();
 
 app.use(express.static("../frontend/build"));
-app.use(
-    cors({
-        origin: "http://localhost:3000",
-        credentials: true,
-    })
-);
+// app.use(
+//     cors({
+//         origin: "http://localhost:3000",
+//         credentials: true,
+//     })
+// );
 app.use(cookieParser());
 app.use(express.json());
 

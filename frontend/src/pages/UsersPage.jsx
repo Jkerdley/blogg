@@ -29,25 +29,24 @@ const UsersPageContainer = ({ className }) => {
 		if (!checkAccess([ROLES.ADMIN], userRole)) {
 			return;
 		}
-		Promise.all([
-			request('http://localhost:3004/api/users'),
-			request('http://localhost:3004/api/users/roles'),
-		]).then(([usersResponse, rolesResponse]) => {
-			if (usersResponse.error || rolesResponse.error) {
-				setErrorMessage(usersResponse.error || rolesResponse.error);
-				return;
-			}
+		Promise.all([request('/api/users'), request('/api/users/roles')]).then(
+			([usersResponse, rolesResponse]) => {
+				if (usersResponse.error || rolesResponse.error) {
+					setErrorMessage(usersResponse.error || rolesResponse.error);
+					return;
+				}
 
-			setUsers(usersResponse.data);
-			setRoles(rolesResponse.data);
-		});
+				setUsers(usersResponse.data);
+				setRoles(rolesResponse.data);
+			},
+		);
 	}, [shouldUpdateUserList, userRole]);
 
 	const onUserRemove = (userId) => {
 		if (!checkAccess([ROLES.ADMIN], userRole)) {
 			return;
 		}
-		request(`http://localhost:3004/api/users/${userId}`, 'DELETE').then(() => {
+		request(`/api/users/${userId}`, 'DELETE').then(() => {
 			setShouldUpdateUserList(!shouldUpdateUserList);
 		});
 	};
